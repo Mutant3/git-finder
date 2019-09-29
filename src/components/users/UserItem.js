@@ -2,27 +2,11 @@
 import React, { Component } from 'react'
 
 export default class UserItem extends Component {
-    constructor(){
-        super();
-        this.state = {
-            id: 'id',
-            login: "monjombo",
-            avatar_url: "https://avatars0.githubusercontent.com/u/1?v=4",
-            html_url: "https://github.com/mojombo"
-        }
-    }
     render() {
-        const {avatar_url, login, html_url} = this.state
+        const {avatar_url, login, html_url} = this.props.user
         return (
-            <div className="card" style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                margin: '10px',
-                padding: '10px'
-            }}>
-                <img 
-                className="card-img-top"
+            <div className="card" style={cardStyle}>
+                <img
                 src={avatar_url}
                 style={{borderRadius: '40px', width: '70px'}}>
                 </img>
@@ -36,5 +20,13 @@ export default class UserItem extends Component {
             </div>
         )
     }
+}
+
+const cardStyle = {
+    flex: '1 25%',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '10px',
+    margin: '10px'
 }
 
