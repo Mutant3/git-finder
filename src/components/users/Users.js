@@ -1,41 +1,35 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropType from 'prop-types'
 import UserItem from './UserItem'
-import axios from 'axios'
+import Loading from '../layout/Loading'
 
-const instance = axios.create({
-    baseURL: 'https://api.github.com/',
-    timeout: 2000
-})
 
-export default class Users extends Component {
-    constructor(){
-        super()
-        this.state = {
-            users: []
+const Users = ({users, loading})=> {
+        if(loading){
+            return <div style={usersStyles}>
+                     <Loading/>
+                   </div>
+        }else{
+            return(
+                <div className="container" style={usersStyles}>
+                    {users.map(user => (
+                        <UserItem key={user.id} user={user} />
+                    ))}
+                </div>
+            )
         }
-    }
+}
 
-    componentDidMount(){
-        instance.get('/users').then(res=>{
-            this.setState({users: res.data})
-        }).catch(error=>{
-            console.log(error);
-        })
-    }
-    render() {
-        return (
-            <div className="container" style={usersStyles}>
-                {this.state.users.map(user=>(
-                    <UserItem key={user.id} user={user}/>
-                ))}
-            </div>
-        )
-    }
+Users.prototype = {
+    loading: PropType.bool.isRequired,
+    users: PropType.array.isRequired
 }
 
 const usersStyles = {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    justifyContent: 'center'
 }
 
+export default Users

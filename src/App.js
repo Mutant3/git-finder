@@ -1,16 +1,39 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './App.css';
+import axios from 'axios'
+
 
 import Navbar from './components/layout/Navbar.js'
 import Users from './components/users/Users'
 
-function App() {
-  return (
-    <div className="App">
-      <Navbar title='Git Finder'/>
-      <Users/>
-    </div>
-  );
+class App extends Component{
+  constructor(){
+        super()
+        this.state = {
+            users: [],
+            loading: false
+        }
+    }
+
+    componentDidMount(){
+        this.setState({ loading: true })
+        
+        axios.get('https://api.github.com/users').then(res=>{
+            this.setState({users: res.data, loading: false})
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
+  render(){
+    return (
+      <div className="App">
+        <Navbar title='Git Finder'/>
+        <Users loading={this.state.loading} users={this.state.users}/>
+      </div>
+    )
+  }
+
 }
 
 export default App;

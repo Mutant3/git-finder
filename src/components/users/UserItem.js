@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
 import PropType from 'prop-types'
                     //props = {user: {avatar_url, login, html_url}}
