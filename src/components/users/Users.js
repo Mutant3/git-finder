@@ -17,7 +17,6 @@ export default class Users extends Component {
 
     componentDidMount(){
         instance.get('/users').then(res=>{
-            console.log(res.data)
             this.setState({users: res.data})
         }).catch(error=>{
             console.log(error);

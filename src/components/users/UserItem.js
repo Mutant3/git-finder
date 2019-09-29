@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/alt-text */
-import React, { Component } from 'react'
-
-export default class UserItem extends Component {
-    render() {
-        const {avatar_url, login, html_url} = this.props.user
+import React from 'react'
+import PropType from 'prop-types'
+                    //props = {user: {avatar_url, login, html_url}}
+const UserItem = ({ user: { avatar_url, login, html_url}}) =>{
         return (
             <div className="card" style={cardStyle}>
                 <img
@@ -19,7 +17,11 @@ export default class UserItem extends Component {
                 </div>
             </div>
         )
-    }
+
+}
+
+UserItem.prototype = {
+    user: PropType.object.isRequired
 }
 
 const cardStyle = {
@@ -30,3 +32,4 @@ const cardStyle = {
     margin: '10px'
 }
 
+export default UserItem
