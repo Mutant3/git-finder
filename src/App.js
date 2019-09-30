@@ -5,13 +5,14 @@ import axios from 'axios'
 
 import Navbar from './components/layout/Navbar.js'
 import Users from './components/users/Users'
+import Search from './components/users/Search'
 
 class App extends Component{
   constructor(){
         super()
         this.state = {
             users: [],
-            loading: false
+            loading: false,
         }
     }
 
@@ -29,6 +30,7 @@ class App extends Component{
     return (
       <div className="App">
         <Navbar title='Git Finder'/>
+          <Search/>
         <Users loading={this.state.loading} users={this.state.users}/>
       </div>
     )
