@@ -7,12 +7,10 @@ const UserItem = ({ user: { avatar_url, login, html_url}}) =>{
             <div className="card" style={cardStyle}>
                 <img
                 src={avatar_url}
-                style={{borderRadius: '40px', width: '70px'}}>
-                </img>
+                style={{borderRadius: '40px', width: '70px'}}/>
                 <h4>{login}</h4>
                 <div>
-                    <a href={html_url} className="btn btn-dark btn-sm my-1" style={{
-                    }}>
+                    <a href={html_url} className="btn btn-dark btn-sm my-1">
                         More
                     </a>
                 </div>
@@ -21,7 +19,7 @@ const UserItem = ({ user: { avatar_url, login, html_url}}) =>{
 
 }
 
-UserItem.prototype = {
+UserItem.propTypes = {
     user: PropType.object.isRequired
 }
 

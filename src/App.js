@@ -5,6 +5,9 @@ import Navbar from './components/layout/Navbar.js'
 import Users from './components/users/Users'
 import Search from './components/users/Search'
 
+const instance = axios.create({
+  baseURL: 'https://api.github.com'
+})
 
 class App extends Component{
   constructor(){
@@ -15,29 +18,31 @@ class App extends Component{
         }
     }
 
-    componentDidMount(){
+    async componentDidMount(){
       this.setState({ loading: true })
-      axios.get(`https://api.github.com/users?
-              client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
-              &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
-              .then(res=>{
-            this.setState({users: res.data, loading: false})
-        }).catch(error=>{
-            console.log(error);
-        })
+      try {
+        const response = await instance.get(
+             `/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
+              &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)     
+              this.setState({users: response.data, loading: false})
+      } catch (error) {
+        console.log(error)
+      }
     }
     
-    searchUser = (user) =>{
+    searchUser = async (user) =>{
       this.setState({ loading: true })
-      axios.get(`https://api.github.com/search/users?q=${user}&
+      try {
+        const response = await instance.get(
+             `https://api.github.com/search/users?q=${user}&
               client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
               &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
-        .then(res => {
-          this.setState({ users: res.data.items, loading: false })
-        }).catch(error => {
-          console.log(error);
-        })
+              this.setState({users: response.data.items, loading: false})
+      } catch (error) {
+        console.log(error)
+      }
     }
+
   render(){
     return (
       <div className="App">

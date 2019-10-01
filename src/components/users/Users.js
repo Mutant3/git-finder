@@ -20,7 +20,7 @@ const Users = ({users, loading})=> {
         }
 }
 
-Users.prototype = {
+Users.propTypes = {
     loading: PropType.bool.isRequired,
     users: PropType.array.isRequired
 }
@@ -28,8 +28,7 @@ Users.prototype = {
 const usersStyles = {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    justifyContent: 'center'
+    justifyContent: 'center',
 }
 
 export default Users
