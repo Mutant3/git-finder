@@ -15,8 +15,8 @@ class Search extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.searchUser(this.state.text);
-        this.setState({text : ''})
+        this.props.searchUser(this.state.text)
+        this.setState({text: ''})
     }
 
     handleChange = e => this.setState({ text: e.target.value})
@@ -33,12 +33,22 @@ class Search extends Component {
                         onChange={this.handleChange}
                         />
 
+                        <div>
+                            
+                        </div>
                         <input type="submit" 
                         style={{marginTop: '10px'}} 
                         value="Search" 
                         className="btn btn-dark btn-block"
                         onClick={this.handleSubmit}
                         />
+                
+                        {this.props.showButtonClear && 
+                        <button 
+                        style={{ width: '100%', marginTop: '10px' }}
+                        onClick={this.props.clearUsers} 
+                        type="button"
+                        className="btn btn-light">Clear</button>}                        
                     </div>
                 </form>
             </div>

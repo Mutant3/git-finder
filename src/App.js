@@ -18,18 +18,6 @@ class App extends Component{
         }
     }
 
-    async componentDidMount(){
-      this.setState({ loading: true })
-      try {
-        const response = await instance.get(
-             `/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
-              &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)     
-              this.setState({users: response.data, loading: false})
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    
     searchUser = async (user) =>{
       this.setState({ loading: true })
       try {
@@ -42,12 +30,19 @@ class App extends Component{
         console.log(error)
       }
     }
-
+    
+    clearUsers = ()=>{
+      this.setState({users: [], loading: false})
+    }
   render(){
     return (
       <div className="App">
         <Navbar title='Git Finder'/>
-          <Search searchUser={this.searchUser}/>
+          <Search 
+          searchUser={this.searchUser} 
+          clearUsers={this.clearUsers} 
+          showButtonClear={this.state.users.length > 0 ? true : false}/>
+
         <Users loading={this.state.loading} users={this.state.users}/>
       </div>
     )
