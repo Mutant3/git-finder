@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import './App.css';
 import axios from 'axios'
-import Navbar from './components/layout/Navbar.js'
+import Navbar from './components/layout/Navbar'
 import Users from './components/users/Users'
 import Search from './components/users/Search'
+import Alert from './components/layout/Alert'
 
 const instance = axios.create({
   baseURL: 'https://api.github.com'
@@ -15,6 +16,7 @@ class App extends Component{
         this.state = {
             users: [],
             loading: false,
+            alert: null
         }
     }
 
@@ -34,15 +36,25 @@ class App extends Component{
     clearUsers = ()=>{
       this.setState({users: [], loading: false})
     }
+
+    setAlert = (type, msg)=>{
+      this.setState({ alert: {type, msg}})
+    }
+
   render(){
     return (
       <div className="App">
         <Navbar title='Git Finder'/>
+          <Alert 
+          alert={this.state.alert}
+          />
           <Search 
           searchUser={this.searchUser} 
           clearUsers={this.clearUsers} 
-          showButtonClear={this.state.users.length > 0 ? true : false}/>
-
+          showButtonClear={this.state.users.length > 0 ? true : false}
+          setAlert={this.setAlert}
+          />
+    
         <Users loading={this.state.loading} users={this.state.users}/>
       </div>
     )

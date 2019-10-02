@@ -10,13 +10,20 @@ class Search extends Component {
     }
     
     static propTypes = {
-        searchUser: PropType.func.isRequired
+        searchUser: PropType.func.isRequired,
+        clearUsers: PropType.func.isRequired,
+        showButtonClear: PropType.bool.isRequired,
+        setAlert: PropType.func.isRequired
     }
 
     handleSubmit = e => {
         e.preventDefault();
-        this.props.searchUser(this.state.text)
-        this.setState({text: ''})
+        if(this.state.text === ''){
+            this.props.setAlert('danger', 'Please, search is not be empty')
+        }else{
+            this.props.searchUser(this.state.text)
+            this.setState({text: ''})
+        }
     }
 
     handleChange = e => this.setState({ text: e.target.value})
