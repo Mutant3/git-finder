@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import './App.css';
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import axios from 'axios'
 import Navbar from './components/layout/Navbar'
 import Users from './components/users/Users'
 import Search from './components/users/Search'
 import Alert from './components/layout/Alert'
+import About from './components/layout/About'
 
 const instance = axios.create({
   baseURL: 'https://api.github.com'
@@ -43,20 +45,25 @@ class App extends Component{
 
   render(){
     return (
-      <div className="App">
-        <Navbar title='Git Finder'/>
-          <Alert 
-          alert={this.state.alert}
-          />
-          <Search 
-          searchUser={this.searchUser} 
-          clearUsers={this.clearUsers} 
-          showButtonClear={this.state.users.length > 0 ? true : false}
-          setAlert={this.setAlert}
-          />
-    
-        <Users loading={this.state.loading} users={this.state.users}/>
-      </div>
+        <BrowserRouter>
+          <div className="App">
+            <Navbar title='Git Finder'/>
+              <Alert alert={this.state.alert}/>
+                <Switch>
+                  <Route exact path="/" render={()=>(
+                    <>
+                      <Search 
+                      searchUser={this.searchUser} 
+                      clearUsers={this.clearUsers} 
+                      showButtonClear={this.state.users.length > 0 ? true : false}
+                      setAlert={this.setAlert}/>
+                      <Users loading={this.state.loading} users={this.state.users}/>
+                    </>
+                  )}/>
+                  <Route exact path="/about" component={About}/>
+                </Switch>
+          </div>
+        </BrowserRouter>
     )
   }
 
