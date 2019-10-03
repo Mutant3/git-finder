@@ -1,22 +1,18 @@
-.profile{
+#about{
   display: flex;
   flex-wrap: wrap;
 }
-
+#bio{
+  flex: 1 200px
+}
 .profile-img{
-  border: 1px solid black;
-  margin: 50px 20px 10px 0px;
+  display: flex;
+  margin: 10px;
   max-width: 260px;
   height: 252px;
-  background-color: rgba(6, 240, 103, 0.274);
-
 }
 
-.list-group{
-  min-width: 20%;
-
+.list-group-item{
+  background-color: black
 }
 
-#btn-edit{
-  border: 1px solid white;
-}

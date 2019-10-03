@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './App.css';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import axios from 'axios'
 import Navbar from './components/layout/Navbar'
@@ -8,6 +7,7 @@ import Search from './components/users/Search'
 import Alert from './components/layout/Alert'
 import About from './components/layout/About'
 import User from './components/users/User'
+import './App.css';
 
 const instance = axios.create({
   baseURL: 'https://api.github.com'
@@ -45,8 +45,14 @@ class App extends Component{
       this.setState({ alert: {type, msg}})
     }
 
-    getUser = (username)=>{
-      console.log(username);
+    getUser = async (username)=>{
+      this.setState({loading: true})
+      try {
+        const response = await instance.get(`https://api.github.com/users/${username}`)
+        this.setState({user: response.data, loading: false})
+      } catch (error) {
+        
+      }
     }
 
   render(){

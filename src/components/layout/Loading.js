@@ -1,11 +1,14 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import loading from '../../assets/loading.gif'
 
 const Loading = () =>{
     return (
-       <Fragment>
+        <div style={{
+            display: 'flex',
+            justifyContent: 'center'
+        }}>
             <img style={loadingStyle} src={loading} alt="loading..."/>
-       </Fragment>
+        </div>
     )
 }
 
