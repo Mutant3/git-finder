@@ -7,6 +7,7 @@ import Users from './components/users/Users'
 import Search from './components/users/Search'
 import Alert from './components/layout/Alert'
 import About from './components/layout/About'
+import User from './components/users/User'
 
 const instance = axios.create({
   baseURL: 'https://api.github.com'
@@ -16,6 +17,7 @@ class App extends Component{
   constructor(){
         super()
         this.state = {
+            user: {},
             users: [],
             loading: false,
             alert: null
@@ -43,6 +45,10 @@ class App extends Component{
       this.setState({ alert: {type, msg}})
     }
 
+    getUser = (username)=>{
+      console.log(username);
+    }
+
   render(){
     return (
         <BrowserRouter>
@@ -61,6 +67,13 @@ class App extends Component{
                     </>
                   )}/>
                   <Route exact path="/about" component={About}/>
+                  <Route exact path="/user/:username" render={props => (
+                    <User {...props} 
+                    getUser={this.getUser} 
+                    user={this.state.user}
+                    loading={this.state.loading}
+                    />
+                  )}/>
                 </Switch>
           </div>
         </BrowserRouter>
