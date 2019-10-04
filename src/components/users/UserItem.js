@@ -2,7 +2,7 @@
 import React from 'react'
 import PropType from 'prop-types'
 import {Link} from 'react-router-dom'
-                    //props = {user: {avatar_url, login}}
+
 const UserItem = ({ user: { avatar_url, login}}) =>{
         return (
             <div className="card" style={cardStyle}>
@@ -17,7 +17,6 @@ const UserItem = ({ user: { avatar_url, login}}) =>{
                 </div>
             </div>
         )
-
 }
 
 UserItem.propTypes = {
