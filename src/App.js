@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {Provider} from 'react-redux'
+import store from './redux/reducers/stores'
 import axios from 'axios'
 import Navbar from './components/layout/Navbar'
 import Users from './components/users/Users'
@@ -17,18 +19,18 @@ const App = ()=>{
     const [user, setUser] = useState({})
     const [repos, setRepos] = useState([])
     const [users, setUsers] = useState([])
-    const [loading, setLoading] = useState(false)
     const [alert, setAlertState] = useState(null)
           
     const searchUser = async (user) =>{
-      setLoading(true)
+      //set state with redux
+      store.dispatch({type: 'LOADING_ON'})
       try {
         const response = await instance.get(
              `https://api.github.com/search/users?q=${user}&
               client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}
               &client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`)
               setUsers(response.data.items)
-              setLoading(false)
+        store.dispatch({ type: 'LOADING_OFF'})
       } catch (error) {
         console.log(error)
       }
@@ -36,7 +38,7 @@ const App = ()=>{
     
     const clearUsers = ()=>{
       setUsers([])
-      setLoading(false)
+      store.dispatch({ type: 'LOADING_OFF' })
     }
 
     const setAlert = (type, msg)=>{
@@ -44,22 +46,22 @@ const App = ()=>{
     }
 
     const getUser = async (username)=>{
-      setLoading(true)
+      store.dispatch({ type: 'LOADING_ON' })
       try {
         const response = await instance.get(`https://api.github.com/users/${username}`)
         setUser(response.data)
-        setLoading(false)
+        store.dispatch({ type: 'LOADING_OFF' })
       } catch (error) {
         console.log(error)
       }
     }
 
     const getRepos = async(username)=>{
-      setLoading(true)
+      store.dispatch({ type: 'LOADING_ON' })
       try {
         const response = await instance.get(`https://api.github.com/users/${username}/repos`)
         setRepos(response.data)
-        setLoading(false)
+        store.dispatch({ type: 'LOADING_OFF' })
       } catch (error) {
         console.log(error)
       }
@@ -71,6 +73,7 @@ const App = ()=>{
             <Navbar title='Git Finder'/>
               <Alert alert={alert}/>
                 <Switch>
+                  <Provider store={store}>
                   <Route exact path="/" render={()=>(
                     <>
                       <Search 
@@ -78,7 +81,7 @@ const App = ()=>{
                       clearUsers={clearUsers} 
                       showButtonClear={users.length > 0 ? true : false}
                       setAlert={setAlert}/>
-                      <Users loading={loading} users={users}/>
+                      <Users users={users}/>
                     </>
                   )}/>
                   <Route exact path="/about" component={About}/>
@@ -88,9 +91,9 @@ const App = ()=>{
                     getRepos={getRepos}
                     repos={repos}
                     user={user}
-                    loading={loading}
                     />
                   )}/>
+                  </Provider>
                 </Switch>
           </div>
         </BrowserRouter>

@@ -1,4 +1,5 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import PropType from 'prop-types'
 import UserItem from './UserItem'
 import Loading from '../layout/Loading'
@@ -31,4 +32,4 @@ const usersStyles = {
     justifyContent: 'center',
 }
 
-export default Users
+export default connect(state =>({loading: state.loading}))(Users)

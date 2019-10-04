@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { useEffect} from 'react';
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import Loading from '../layout/Loading'
 import '../../styles/User.css'
@@ -93,4 +94,4 @@ const h3Style = {
     padding: '5px' 
 }
 
-export default User
+export default connect(state=>({loading: state.loading}))(User)
