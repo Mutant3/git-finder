@@ -18,6 +18,7 @@ class App extends Component{
         super()
         this.state = {
             user: {},
+            repos: [],
             users: [],
             loading: false,
             alert: null
@@ -51,9 +52,20 @@ class App extends Component{
         const response = await instance.get(`https://api.github.com/users/${username}`)
         this.setState({user: response.data, loading: false})
       } catch (error) {
-        
+        console.log(error)
       }
     }
+
+    getRepos = async(username)=>{
+      this.setState({ loading: true })
+      try {
+        const response = await instance.get(`https://api.github.com/users/${username}/repos`)
+        this.setState({ repos: response.data, loading: false })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    
 
   render(){
     return (
@@ -75,7 +87,9 @@ class App extends Component{
                   <Route exact path="/about" component={About}/>
                   <Route exact path="/user/:username" render={props => (
                     <User {...props} 
-                    getUser={this.getUser} 
+                    getUser={this.getUser}
+                    getRepos={this.getRepos}
+                    repos={this.state.repos}
                     user={this.state.user}
                     loading={this.state.loading}
                     />

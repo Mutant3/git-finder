@@ -7,6 +7,7 @@ import '../../styles/User.css'
 export default class user extends Component {
     componentDidMount() {
         this.props.getUser(this.props.match.params.username)
+        this.props.getRepos(this.props.match.params.username)
     }
 
     render() {
@@ -22,7 +23,6 @@ export default class user extends Component {
             public_repos
         } = this.props.user
         const { loading } = this.props
-
         if (loading) return <Loading />
         else
         return (
@@ -49,7 +49,6 @@ export default class user extends Component {
                                 <button className="btn btn-primary" onClick={()=> window.open(html_url)} style={{margin: '10px'}}>Profile Github</button>
                             </div>
                         </div>
-
                         <ul className="list-group">
                             <li className="list-group-item active bg-dark"><strong>Informations</strong></li>
                             <table className="table table-bordered">
@@ -77,6 +76,12 @@ export default class user extends Component {
                                 </tbody>
                             </table>
                         </ul>
+                            <h3 style={{textAlign: 'center'}}>Repositories</h3>
+                            {this.props.repos.map(repo=>(
+                                <a key={repo.id} href={`https://github.com/${this.props.match.params.username}/${repo.name}`} 
+                                style={{fontSize: '18px', margin: '10px'}} 
+                                className="badge badge-info">{repo.name}</a>
+                            ))}
                     </div>
                 </div>
             </div>
